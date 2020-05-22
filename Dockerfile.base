@@ -1,0 +1,64 @@
+FROM mageops/centos-systemd:latest AS ansible-install
+
+RUN yum -y install \
+        epel-release \
+    && yum -y update \
+    && yum -y install \
+        atop \
+        bind-utils \
+        curl \
+        gdb \
+        htop \
+        iotop \
+        jq \
+        mc \
+        nano \
+        lsof \
+        nc \
+        nmap \
+        psmisc \
+        rsync \
+        socat \
+        strace \
+        sysstat \
+        unzip \
+        vim \
+        wget \
+        yum-plugin-verify \
+        yum-utils \
+        dnf \
+        python3 \
+        python3-virtualenv \
+        python3-pip \
+    && yum -y install 'https://repo.ius.io/ius-release-el7.rpm' \
+    && yum-config-manager --disable ius ius-archive ius-testing \
+    && yum -y --enablerepo=ius install git222 git222-core-doc
+
+RUN mkdir -p /opt/mageops/ansible \
+    && git clone \
+        --depth 5 \
+        --single-branch \
+        --branch vagrant-plus \
+            https://github.com/mageops/ansible-infrastructure.git \
+                /opt/mageops/ansible/infrastructure \
+    && git clone \
+        https://github.com/mageops/ansible-infrastructure-vars.git \
+            /opt/mageops/ansible/infrastructure-vars \
+    && mkdir -pv \
+        /opt/mageops/ansible/infrastructure/vars/global \
+        /opt/mageops/ansible/infrastructure/vars/local \
+        /opt/mageops/ansible/infrastructure/vars/project \
+        /opt/mageops/ansible/infrastructure/tmp \
+    && ln -snvf \
+        /opt/mageops/ansible/infrastructure-vars/project-raccoon \
+        /opt/mageops/ansible/infrastructure/vars/project \
+    && virtualenv-3 /opt/mageops/ansible/virtualenv \
+    && source /opt/mageops/ansible/virtualenv/bin/activate \
+    && pip install \
+        -r /opt/mageops/ansible/infrastructure/requirements-python.txt \
+    && ansible-galaxy install \
+        -r /opt/mageops/ansible/infrastructure/requirements-galaxy.yml \
+        -p /opt/mageops/ansible/infrastructure/roles
+
+RUN mkdir -p /opt/mageops/ansible/bin
+
