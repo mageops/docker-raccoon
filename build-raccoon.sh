@@ -11,15 +11,14 @@ echo " * Provision container with ansible"
 rcn-docker-container-run \
     "${RCN_DOCKER_IMAGE}-base-ansible"
 
-docker exec \
-    --tty \
-    "$RCN_DOCKER_CONTAINER" \
-        /usr/local/bin/mageops-update
+rcn-docker-container-exec \
+    /usr/local/bin/mageops-update
 
-docker exec \
-    --tty \
-    "$RCN_DOCKER_CONTAINER" \
-        /usr/local/bin/mageops-playbook raccoon
+rcn-docker-container-exec \
+    /usr/local/bin/mageops-playbook raccoon
+
+rcn-docker-container-exec \
+    /usr/local/bin/mageops-img-trim
 
 ################################################################################
 

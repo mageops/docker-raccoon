@@ -29,13 +29,18 @@ jobs:
       script: ./build-raccoon.sh
       if: 'commit_message !~ /BUILD-ONLY-DEMO/'
 
-    - stage: raccoon-demo
-      name: Provision the Demo container
-      script: ./build-raccoon-demo.sh
-      if: 'commit_message !~ /BUILD-SKIP-DEMO/'
+    # Demo build doesn't work on travis due to timeout :(
+    # Magento's setup:install with sample data is too long without output (ansible)
+    # Maybe I can somehow configure ansible to display anything while it's running
+    # or trick travis via other means... Anyway with catalog image resizing it won't
+    # probably fit in the ime limit anyway.
+    # - stage: raccoon-demo
+    #   name: Provision the Demo container
+    #   script: ./build-raccoon-demo.sh
+    #   if: 'commit_message !~ /BUILD-SKIP-DEMO/'
 
 stages:
   - raccoon-base-centos
   - raccoon-base-ansible
   - raccoon
-  - raccoon-demo
+  # - raccoon-demo

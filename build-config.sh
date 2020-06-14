@@ -51,3 +51,11 @@ rcn-docker-push() {
     [ -z "$DOCKER_PASSWORD" ] || echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
     docker push "$1"
 }
+
+rcn-docker-container-exec() {
+    docker exec \
+        --tty \
+            "$RCN_DOCKER_CONTAINER" \
+                "$@"
+}
+

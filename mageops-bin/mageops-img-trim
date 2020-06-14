@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+
+MAGEOPS_ROOT="${MAGEOPS_ROOT:-/opt/mageops}"
+
+yum -y clean all || true
+dnf -y clean all || true
+
+rm -rvf \
+    /root/.cache/* \
+    /home/magento/.cache/*
+
+systemctl stop mysqld || true
+rm -rvf \
+    /var/lib/mysql/ib*
+
+
