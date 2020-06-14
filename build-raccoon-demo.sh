@@ -8,8 +8,8 @@ set -e
 
 echo " * Provision container with ansible"
 
-# rcn-docker-container-run \
-#     "${RCN_DOCKER_IMAGE}"
+rcn-docker-container-run \
+    "${RCN_DOCKER_IMAGE}"
 
 rcn-docker-container-exec \
     /usr/local/bin/mageops-update
