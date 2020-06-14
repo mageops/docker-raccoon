@@ -1,5 +1,4 @@
-
-[![Travis Build](https://travis-ci.com/mageops/docker-raccoon.svg?branch=master&status=created)](https://travis-ci.com/mageops/docker-raccoon)
+[![Travis Build](https://img.shields.io/travis/com/mageops/docker-raccoon?label=Docker+Image+Build)](https://travis-ci.com/mageops/docker-raccoon)
 
 # MageOps Raccoon Docker Containers
 

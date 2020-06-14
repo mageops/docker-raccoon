@@ -6,11 +6,12 @@ MAGEOPS_ROOT="${MAGEOPS_ROOT:-/opt/mageops}"
 
 . $MAGEOPS_ROOT/ansible/virtualenv/bin/activate
 
-cd  $MAGEOPS_ROOT/ansible/infrastructure/
-
 PLAYBOOK="$1"; shift
 
 export ANSIBLE_FORCE_COLOR="True"
+
+cd $MAGEOPS_ROOT/ansible/infrastructure/
+
 set -x; ansible-playbook \
     -i inventory/raccoon.yml \
     --limit raccoon_local \

@@ -6,7 +6,10 @@ RUN yum -y install \
         python3-virtualenv \
         python3-pip
 
-ARG ANSIBLE_BRANCH="master"
-ENV MAGEOPS_ROOT="/opt/mageops"
+ARG RCN_ANSIBLE_BRANCH="master"
+
+ENV MAGEOPS_ROOT="/opt/mageops" \
+    MAGEOPS_ANSIBLE_BRANCH="${RCN_ANSIBLE_BRANCH}"
+
 COPY mageops-bin/ $MAGEOPS_ROOT/bin/
 RUN /usr/bin/bash $MAGEOPS_ROOT/bin/mageops-install

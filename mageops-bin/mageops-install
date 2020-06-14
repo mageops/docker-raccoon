@@ -3,6 +3,7 @@
 set -ex
 
 MAGEOPS_ROOT="${1:-${MAGEOPS_ROOT:-/opt/mageops}}"
+MAGEOPS_ANSIBLE_BRANCH="${MAGEOPS_ANSIBLE_BRANCH:-master}"
 
 chmod +x $MAGEOPS_ROOT/bin/*
 
@@ -16,7 +17,7 @@ mkdir -pv \
 git clone \
     --depth 5 \
     --single-branch \
-    --branch "${ANSIBLE_BRANCH}" \
+    --branch "${MAGEOPS_ANSIBLE_BRANCH}" \
         https://github.com/mageops/ansible-infrastructure.git \
             $MAGEOPS_ROOT/ansible/infrastructure
 
