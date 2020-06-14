@@ -8,5 +8,8 @@ env:
   global:
     ANSIBLE_BRANCH="raccoon-refactor"
 
+before_install:
+  - echo '{"experimental":true}' | sudo tee /etc/docker/daemon.json && sudo systemctl restart docker
+
 script:
   - ./build.sh
