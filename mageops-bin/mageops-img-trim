@@ -11,8 +11,4 @@ rm -rvf \
     /root/.cache/* \
     /home/magento/.cache/*
 
-systemctl stop mysqld || true
-rm -rvf \
-    /var/lib/mysql/ib*
-
 
