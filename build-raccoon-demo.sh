@@ -14,6 +14,11 @@ rcn-docker-container-run \
 docker exec \
     --tty \
     "$RCN_DOCKER_CONTAINER" \
+        /usr/local/bin/mageops-update
+
+docker exec \
+    --tty \
+    "$RCN_DOCKER_CONTAINER" \
         /usr/local/bin/mageops-playbook raccoon.demo
 
 ################################################################################

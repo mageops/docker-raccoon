@@ -31,7 +31,7 @@ jobs:
       script: ./build-raccoon-demo.sh
 
 stages:
-  - raccoon-base-centos
+  # - raccoon-base-centos
   - raccoon-base-ansible
   - raccoon
   - raccoon-demo
