@@ -20,7 +20,7 @@ jobs:
 
     - stage: raccoon-base-ansible
       name: Build Ansible base contatiner
-      script: ./build-raccoon-base-andible.sh
+      script: ./build-raccoon-base-ansible.sh
 
     - stage: raccoon
       name: Provision the Raccoon development container
