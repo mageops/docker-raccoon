@@ -35,7 +35,7 @@ rcn-docker-container-run() {
         --tmpfs /run:exec \
         --volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
         --name "$RCN_DOCKER_CONTAINER" \
-            "${RCN_DOCKER_IMAGE}-base-ansible"
+            "$1"
 
     echo " * Wait until container is healthy"
 
@@ -49,5 +49,5 @@ rcn-docker-container-run() {
 
 rcn-docker-push() {
     [ -z "$DOCKER_PASSWORD" ] || echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    docker push "$@"
+    docker push "$1"
 }

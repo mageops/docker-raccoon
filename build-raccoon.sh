@@ -6,9 +6,10 @@ set -e
 
 ################################################################################
 
-rcn-docker-container-run
-
 echo " * Provision container with ansible"
+
+rcn-docker-container-run \
+    "${RCN_DOCKER_IMAGE}-base-ansible"
 
 docker exec \
     --tty \
