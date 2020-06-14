@@ -17,7 +17,7 @@ jobs:
     - stage: raccoon-base-centos
       name: Build fat CentOS base container
       script: ./build-raccoon-base-centos.sh
-      if: 'commit_message ~ /BUILD-FULL/'
+      if: 'commit_message =~ /BUILD-FULL/'
 
     - stage: raccoon-base-ansible
       name: Build Ansible base contatiner
