@@ -1,0 +1,12 @@
+os: linux
+dist: bionic
+language: python
+services:
+  - docker
+
+env:
+  global:
+    ANSIBLE_BRANCH="raccoon-refactor"
+
+script:
+  - ./build.sh

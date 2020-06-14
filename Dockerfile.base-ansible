@@ -1,0 +1,12 @@
+ARG BASE_IMAGE=mageops/raccoon-base-centos
+FROM ${BASE_IMAGE} AS base-ansible
+
+RUN yum -y install \
+        python3 \
+        python3-virtualenv \
+        python3-pip
+
+ARG ANSIBLE_BRANCH="master"
+ENV MAGEOPS_ROOT="/opt/mageops"
+COPY mageops-bin/ $MAGEOPS_ROOT/bin/
+RUN /usr/bin/bash $MAGEOPS_ROOT/bin/mageops-install
