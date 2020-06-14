@@ -53,16 +53,17 @@ docker run \
         mageops/raccoon-demo
 ```
 
-Once its fully started you can open [the shop](http://localhost:8080/) in your browser.
+Once its fully started you can open [the shop](http://localhost/) in your browser.
 
 In case you are attached with interactive tty (recommended!) you will know
 when it's ready, otherwise observe the docker health status.
 
-You can get to [the admin](http://localhost:8080/admin/)
+You can get to [the admin](http://localhost/admin/)
 using `admin` as user and `racc00n` for password.
 
-_Using `magesuite.me` host is also possible for HTTPs but you'd have
-to add the line `127.0.0.1 magesuite.me` to your `/etc/hosts` file._
+
+> 💡_Using `magesuite.me` host is also possible for HTTPs but you'd have
+> to add the line `127.0.0.1 magesuite.me` to your `/etc/hosts` file._
 
 > ⚠️ The whole system is in *production* mode which means the `demo` container
 > is not suitable for development.
