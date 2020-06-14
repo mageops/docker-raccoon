@@ -6,7 +6,7 @@ Local development (and demo) containers
 [running full *CentOS 7* system](https://github.com/mageops/docker-centos-systemd)
  provisioned with [MageOps Ansible Infrastructure](https://github.com/mageops/ansible-infrastructure) code.
 
-💡 *Jump straight to the [Demo](#demo) section to see some action.*
+⚡️ *Jump straight to the [Demo](#demo) section to see some action.*
 
 ## Containers
 
@@ -61,9 +61,10 @@ when it's ready, otherwise observe the docker health status.
 You can get to [the admin](http://localhost/admin/)
 using `admin` as user and `racc00n` for password.
 
+_PS Port `8080` is varnish._
 
-> 💡_Using `magesuite.me` host is also possible for HTTPs but you'd have
-> to add the line `127.0.0.1 magesuite.me` to your `/etc/hosts` file._
+> 💡Using `magesuite.me` host is also possible for HTTPs but you'd have
+> to add the line `127.0.0.1 magesuite.me` to your `/etc/hosts` file.
 
 > ⚠️ The whole system is in *production* mode which means the `demo` container
 > is not suitable for development.
