@@ -11,5 +11,27 @@ env:
 before_install:
   - echo '{"experimental":true}' | sudo tee /etc/docker/daemon.json && sudo systemctl restart docker
 
-script:
-  - ./build.sh
+
+jobs:
+  include:
+    - stage: raccoon-base-centos
+      name: Build fat CentOS base container
+      script: ./build-raccoon-base-centos.sh
+
+    - stage: raccoon-base-ansible
+      name: Build Ansible base contatiner
+      script: ./build-raccoon-base-andible.sh
+
+    - stage: raccoon
+      name: Provision the Raccoon development container
+      script: ./build-raccoon.sh
+
+    - stage: raccoon-demo
+      name: Provision the Demo container
+      script: ./build-raccoon-demo.sh
+
+stages:
+  - raccoon-base-centos
+  - raccoon-base-ansible
+  - raccoon
+  - raccoon-demo
