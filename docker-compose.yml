@@ -1,0 +1,97 @@
+####
+# In order to allow the container to bind to our special magesuite.me address
+# we need to create a virtual one on the host. The simplest way is to add it
+# as an alias to the loopback interface or create a fake device.
+#
+# Note: These commands require root privileges so prefix them with `sudo`.
+#
+#### Linux
+#
+# We've got two different commands for managing networks.
+#
+# - Add it using ip:  ip addr add 192.168.100.100/32 dev lo
+#   Remove it:        ip addr del 192.168.100.100/32 dev lo
+#
+# - Add via ifconfig: ifconfig lo:100 192.168.100.100 netmask 255.255.255.255 up
+#   Remove it:        ifconfig lo:100 del 192.168.100.100
+#
+#### MacOS
+#
+# The recommended way is loopback alias for now, the fake eth seems to be
+# misbehaving sometimes.
+#
+# - Add an alias:     ifconfig lo0 alias 192.168.100.100 netmask 255.255.255.255 up
+#   Remove it:        ifconfig lo0 alias 192.168.100.100 remove
+#
+# - Add a fake:       ifconfig feth100 create 192.168.100.100 netmask 255.255.255.255 up
+#   Remove it:        ifconfig feth100 destroy
+#
+# PS You can list all interfaces by using `ifconfig` without arguments.
+#
+# CAUTION! If you have the VirtualBox/Vagrant raccoon installed then
+# you need to stop it and remove the network interface:
+# ifconfig vboxnet0 delete
+####
+
+version: '3'
+
+services:
+  raccoon:
+    image: mageops/raccoon
+    stdin_open: true
+    tty: true
+    tmpfs:
+      - /run:exec
+      - /tmp:exec
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - magento-src:/var/www/magento/app
+      - mysql-data:/var/lib/mysql
+      - elastic-data:/var/lib/elasticsearch
+    ports:
+      - 192.168.100.100:22:22
+      - 192.168.100.100:80:80
+      - 192.168.100.100:443:443
+      - 192.168.100.100:8080:8080
+
+  sync-magento-src-raccoon:
+    image: pink33n/docker-volume-sync
+    restart: on-failure
+    environment:
+      - SYNC_VOLUME_NAME=magento-src-raccoon
+      - SYNC_UID=1500
+      - SYNC_GID=1500
+    volumes:
+      - magento-src:/dvs/data
+      - sync-cache:/dvs/cache
+    networks:
+      - sync
+
+  sync-magento-src-host:
+    image: pink33n/docker-volume-sync
+    restart: on-failure
+    environment:
+      - SYNC_VOLUME_NAME=magento-src-host
+      - SYNC_IGNORE_NAMES=.idea,.DS_Store,._.DS_Store,tmp,cache,.history,thumbnails,.thumbs
+      - SYNC_IGNORE_PATHS=var
+      - SYNC_SERVER_HOST=server
+    volumes:
+      - ${PWD}:/dvs/data
+      - sync-cache:/dvs/cache
+    networks:
+      - sync
+    links:
+      - sync-magento-src-raccoon:server
+
+volumes:
+  mysql-data: ~
+  elastic-data: ~
+  magento-src: ~
+  sync-cache: ~
+
+networks:
+  sync:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: 16384
+
