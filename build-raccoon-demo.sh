@@ -18,7 +18,7 @@ rcn-docker-container-exec \
     /usr/local/bin/mageops-playbook raccoon.demo
 
 rcn-docker-container-exec \
-    /usr/local/bin/mageops-img-trim
+    /usr/local/bin/mageops-trim
 
 ################################################################################
 
