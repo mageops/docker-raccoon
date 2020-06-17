@@ -16,7 +16,7 @@ systemctl stop redis
 systemctl stop redis-sessions
 systemctl stop elasticsearch
 
-rm -rvf \
+rm -rf \
     /{root,home/magento}/{.cache/*,.opcache/*,.*history,.composer,.yarn/*,.npm/*} \
     /var/lib/mysql/ib_logfile* \
     /var/lib/mysql/ib_tmp* \
